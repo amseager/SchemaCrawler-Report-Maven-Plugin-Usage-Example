@@ -57,6 +57,14 @@
           <groupId>us.fatehi</groupId>
           <artifactId>schemacrawler-maven-plugin</artifactId>
           <version>16.15.8.3</version>
+          <executions>
+            <execution>
+              <phase>prepare-package</phase>
+              <goals>
+                <goal>schemacrawler</goal>
+              </goals>
+            </execution>
+          </executions>
           <dependencies>
             <!-- If you do not have Graphviz installed, 
               provide a dependency on graphviz-java -->
@@ -64,6 +72,11 @@
               <groupId>guru.nidi</groupId>
               <artifactId>graphviz-java-all-j2v8</artifactId>
               <version>0.18.1</version>
+            </dependency>
+            <dependency>
+              <groupId>org.graalvm.js</groupId>
+              <artifactId>js</artifactId>
+              <version>21.2.0</version>
             </dependency>
             <!-- IMPORTANT: Make sure you have a dependency on the JDBC driver.
               In this example, we are using SQLite as our database server. -->
@@ -80,6 +93,20 @@
               <version>16.15.8</version>
             </dependency>
           </dependencies>
+          <configuration>
+            <url>jdbc:sqlite:sc.db</url>
+            <user>sa</user>
+            <password></password>
+            <command>schema</command>
+            <infolevel>maximum</infolevel>
+            <title>Database Schema</title>
+            <!-- <schemas>PUBLIC.BOOKS</schemas> -->
+            <outputfile>database-schema.png</outputfile>
+            <outputformat>png</outputformat>
+            <config>custom.schemacrawler.config.properties</config>
+            <loadrowcounts>true</loadrowcounts>
+            <loglevel>CONFIG</loglevel>
+          </configuration>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -93,27 +120,27 @@
 
   </build>
 
-  <reporting>
-    <plugins>
-      <plugin>
-        <groupId>us.fatehi</groupId>
-        <artifactId>schemacrawler-maven-plugin</artifactId>
-        <configuration>
-          <url>jdbc:sqlite:sc.db</url>
-          <user>sa</user>
-          <password></password>
-          <command>schema</command>
-          <infolevel>maximum</infolevel>
-          <title>Database Schema</title>
-          <!-- <schemas>PUBLIC.BOOKS</schemas> -->
-          <outputfile>database-schema.png</outputfile>
-          <outputformat>png</outputformat>
-          <config>custom.schemacrawler.config.properties</config>
-          <loadrowcounts>true</loadrowcounts>
-          <loglevel>OFF</loglevel>
-        </configuration>
-      </plugin>
-    </plugins>
-  </reporting>
+<!--  <reporting>-->
+<!--    <plugins>-->
+<!--      <plugin>-->
+<!--        <groupId>us.fatehi</groupId>-->
+<!--        <artifactId>schemacrawler-maven-plugin</artifactId>-->
+<!--        <configuration>-->
+<!--          <url>jdbc:sqlite:sc.db</url>-->
+<!--          <user>sa</user>-->
+<!--          <password></password>-->
+<!--          <command>schema</command>-->
+<!--          <infolevel>maximum</infolevel>-->
+<!--          <title>Database Schema</title>-->
+<!--          &lt;!&ndash; <schemas>PUBLIC.BOOKS</schemas> &ndash;&gt;-->
+<!--          <outputfile>database-schema.png</outputfile>-->
+<!--          <outputformat>png</outputformat>-->
+<!--          <config>custom.schemacrawler.config.properties</config>-->
+<!--          <loadrowcounts>true</loadrowcounts>-->
+<!--          <loglevel>OFF</loglevel>-->
+<!--        </configuration>-->
+<!--      </plugin>-->
+<!--    </plugins>-->
+<!--  </reporting>-->
 
 </project>
